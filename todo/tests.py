@@ -53,6 +53,12 @@ class TaskModelTestCase(TestCase):
 
         self.assertFalse(task.is_overdue(current))
 
+    def test_overdue_property(self):
+        task = Task(title='task1', due_at=timezone.make_aware(datetime(2024, 1, 1)))
+        task.save()
+
+        self.assertTrue(task.overdue)
+
 
 class TodoViewTestCase(TestCase):
     def test_index_get(self):
@@ -110,6 +116,17 @@ class TodoViewTestCase(TestCase):
         self.assertEqual(response.templates[0].name, 'todo/index.html')
         self.assertEqual(len(response.context['tasks']), 1)
         self.assertEqual(response.context['tasks'][0], task1)
+
+    def test_index_overdue_highlight(self):
+        task = Task(title='task1', due_at=timezone.make_aware(datetime(2024, 1, 1)))
+        task.save()
+
+        client = Client()
+        response = client.get('/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Overdue')
+        self.assertContains(response, 'class="text overdue"')
 
     def test_detail_get_success(self):
         task = Task(title='task1', due_at=timezone.make_aware(datetime(2024, 7, 1)))

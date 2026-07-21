@@ -14,7 +14,10 @@
     <ul>
       <li>Posted at: {{ task.posted_at }}</li>
       {% if task.due_at %}
-      <li>Due at: {{ task.due_at }}</li>
+      <li{% if task.overdue and not task.completed %} class="overdue"{% endif %}>Due at: {{ task.due_at }}</li>
+      {% endif %}
+      {% if task.overdue and not task.completed %}
+      <li class="overdue">Overdue</li>
       {% endif %}
       {% if task.completed %}
       <li>Status: Completed</li>
