@@ -54,3 +54,19 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+.overdue {
+    color: #c0392b;
+    font-weight: bold;
+    background-color: rgba(192, 57, 43, 0.12);
+    padding: 0.35rem 0.55rem;
+    border-radius: 6px;
+    display: inline-block;
+    border: 1px solid rgba(192, 57, 43, 0.35);
+}
+
+.text.overdue {
+    border: 2px solid #e74c3c;
+    background-color: #fdecea;
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.08);
+}
