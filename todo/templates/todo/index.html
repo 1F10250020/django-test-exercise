@@ -29,8 +29,16 @@
     <br>
 
     <div>
-      <a href="{% url 'index' %}?order=due">Sort by Due Date</a> |
-      <a href="{% url 'index' %}?order=post">Sort by Posted Date</a>
+      <form action="{% url 'index' %}" method="get" class="search-form">
+        <input type="text" name="q" placeholder="Search title" value="{{ query }}">
+        <button type="submit">Search</button>
+        <a href="{% url 'index' %}">Clear</a>
+      </form>
+    </div>
+
+    <div>
+      <a href="{% url 'index' %}?order=due{% if query %}&q={{ query|urlencode }}{% endif %}">Sort by Due Date</a> |
+      <a href="{% url 'index' %}?order=post{% if query %}&q={{ query|urlencode }}{% endif %}">Sort by Posted Date</a>
     </div>
 
     {% for task in tasks %}
